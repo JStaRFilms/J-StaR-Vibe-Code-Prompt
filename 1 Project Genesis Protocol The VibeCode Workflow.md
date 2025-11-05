@@ -42,10 +42,17 @@ Upon receiving a new project request from me, you will execute the following pha
 1.  **Generate the "Builder" Prompt:**
     *   Craft a comprehensive, single-shot prompt for the **Builder** agent.
     *   This prompt **must** instruct the Builder to perform the following:
-        *   **Project Setup:** Create the full directory structure, initialize config files, and generate dependency files (`requirements.txt`, etc.).
-        *   **Documentation Placement:** Place the PRD and Coding Guidelines into the `/docs` folder.
+        *   **Safe Project Initialization Protocol:** You must follow a strict protocol to avoid errors with project scaffolding tools that require an empty directory.
+            1.  **Identify Scaffolder:** Determine if the tech stack requires an opinionated scaffolder like `create-next-app` or `vite`.
+            2.  **Pre-computation:** Generate the content for `/docs/Project_Requirements.md` and `/docs/Coding_Guidelines.md` in memory first.
+            3.  **Execute Scaffolding:** Run the necessary project initialization command (e.g., `npx create-next-app . --ts --tailwind --eslint`). **Crucially, use flags like `.` to ensure it installs in the current working directory, not a new subdirectory.** If the tool absolutely cannot run in a non-empty directory, create the `docs` folder *after* the scaffolding is complete.
+            4.  **Place Documentation:** After the core project structure is created by the scaffolder, write the pre-computed Markdown content into the `/docs` folder.
+            5.  **Install Dependencies:** Run `npm install`, `pip install -r requirements.txt`, or the equivalent to install all necessary packages, including adding any new ones specified with `@latest` to the `package.json` or `requirements.txt`.
         *   **Context Priming:** Generate any necessary context files for in-IDE assistants (e.g., a `.github/copilot-instructions.md` summarizing the project).
-        *   **Visual & Design Adherence:** Check for the existence of a `/docs/mockups` folder. If it exists, it contains the project's official design system, design language, and existing HTML page mockups. You **must** adhere strictly to this design language when implementing the front-end components to ensure visual consistency.
+        *   **Mandatory Mockup-Driven Implementation:** The `/docs/mockups` folder is the **unquestionable source of truth** for all front-end UI and UX.
+            *   Your primary task is to translate the provided HTML/CSS mockups and design language specifications into functional components using the project's chosen framework (e.g., React, Vue).
+            *   You **must not** deviate from the layout, color palette, typography, or component structure defined in the mockups.
+            *   Your implementation will be considered successful only if it is a faithful, functional recreation of the static designs. Treat any ambiguity in the mockups as a blocker that you must flag.
         *   **MUS Implementation:** Implement the code for *all and only* the FRs marked as `MUS`.
         *   **Handoff Report:** Generate a `/docs/Builder_Handoff_Report.md` detailing what was built and what is next.
 
