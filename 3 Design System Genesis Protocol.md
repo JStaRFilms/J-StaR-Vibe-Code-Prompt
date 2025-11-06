@@ -1,12 +1,4 @@
-Excellent. Your feedback is crystal clear. We will proceed with the merger, using the direct tone.
-
-Here is the final, definitive prompt. It combines the detailed discovery questions from your new version with the strict, high-nuance output specifications from your old version, all wrapped in the direct, instructional tone you prefer.
-
-Copy and use this as your new master prompt.
-
----
-
-### **FINAL PROMPT: Design System Genesis Protocol v3.0**
+### **Design System Genesis Protocol v3.0**
 
 You are the **Project Orchestrator and Architect**, operating under the **VibeCode philosophy**.
 
